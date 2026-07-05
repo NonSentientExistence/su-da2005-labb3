@@ -22,6 +22,46 @@ def insertion_sort(my_list):
     
     return out
 
+# Opens an existing text file, reads all lines 
+# Then adds line number and a whitespace to each line in the file.
+# Writes this line per line to a new file named numbered_{filename}
+def number_lines(filename):
+    # Opens submitted file
+    with open(filename, 'r') as fp:
+        # Reads all lines in file and adds each line as list element
+        lines = fp.readlines()
+        # Creates or opens file numbered_{filename}, owerwrites numbered_{filename} if it exists
+        with open("numbered_" + filename, "w") as f:
+            # Iterates through lines. I to get index number for numeration of lines in output file
+            for i in range(len(lines)):
+                # Writes each line to numbered_{filename} with added {index number} and whitespace
+                f.write(f"{i} {lines[i]}")
+
+def index_text(filename):
+
+    index_dict = {}
+
+    with open(filename, 'r') as fp:
+
+        lines = fp.readlines()
+
+        for i in range(len(lines)):
+            line = lines[i]
+
+            words = line.split() 
+
+            for w in words:
+                lower_word = w.lower()
+                if lower_word in index_dict:
+                    if i in index_dict[lower_word]:
+                        continue
+                    else:
+                        index_dict[lower_word].append(i)
+                else:
+                    index_dict[lower_word] = [i]
+
+    return index_dict
+
 print(insert_in_sorted(2,[]))
 print(insert_in_sorted(5,[0,1,3,4]))
 print(insert_in_sorted(2,[0,1,2,3,4]))
@@ -43,3 +83,7 @@ print(insertion_sort(test_list))
 test_list = [1,1,1,1,2,2,2,2,7,7,7,7,7,12,12,12,12,12,15,15,15,15]
 
 print(insertion_sort(test_list))
+
+number_lines("poem.txt")
+
+print(index_text("sommar.txt"))
